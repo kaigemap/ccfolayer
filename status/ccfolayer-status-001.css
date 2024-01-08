@@ -1,0 +1,93 @@
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/status/main.css");
+
+/* 変数上書き */
+:root {
+    --avatar-height: 80px;
+    --avatar-width: 140px;
+    --avatar-background: rgba(22, 22, 22, 1);
+    --avatar-border-size: 1px;
+    --avatar-border-style: solid;
+    --avatar-border-color: rgb(245, 245, 245);
+    --avatar-border-radius: 10px;
+  
+    --badge-height:24px;
+    --badge-width: 40px;
+    --badge-background: rgba(0, 0, 0, 0.64);
+    --badge-font-size: 1.5rem;
+    --badge-font-color: rgb(255, 255, 255);
+
+    --status-column: 1;
+    --status-height: 6px;
+    --status-width: 138px;
+    --status-background: var(--background-color, rgb(31, 164, 184));
+    --status-font-size: 1.5rem;
+    --status-font-color: var(--font-color, rgb(255, 255, 255));
+    --status-font-secondary-color: var(--font-color-fail, #F93844);
+    --status-font-border-color: rgb(0, 0, 0);
+    --status-border-width: var(--border-width, 1px);
+    --status-border-style: solid;
+    --status-border-color: var(--border-color, rgb(0, 0, 0));
+    --status-border-image: var(--border-image, url());
+    --status-border-radius: var(--border-radius, 2px);
+    --status-border-shadow: var(--border-shadow, 0);
+}
+
+.bOcrjs {
+    padding: 0px;
+    bottom: 0px;
+    position: absolute;
+}
+
+.MuiBadge-badge {
+    border-radius: 0px 10px 0px 10px;
+    top: 14px !important;
+    right: 21px !important;
+    position: absolute !important;
+}
+
+.APSsb {
+  flex-direction: column;
+  position: relative;
+  width: var(--avater-container-width);
+  justify-content: flex-end;
+}
+
+.jfazhi {
+  margin-left: 0px;
+  display: grid;
+  gap: 24px;
+  padding-top: 28px
+}
+
+.kzKPwU {
+  margin: 1px ;
+}
+
+.MuiTypography-body2 {
+  padding: 0px 2px;
+  margin-top: -54px
+}
+
+[variant="bar"]>div {
+  overflow: visible;
+}
+
+[variant="bar"]>div>div {
+  height: 28px;
+}
+
+.hvcSCS {
+  display: flex;
+  flex-direction: column;
+  min-height: var(--avatar-height);
+  width: var(--avatar-width);
+}
+.hvcSCS::before {
+  flex-shrink: 1;
+  flex-grow: 1;
+  content: "";
+}
+.hvcSCS img {
+  max-width: 60%;
+  flex-shrink: 0;
+}
