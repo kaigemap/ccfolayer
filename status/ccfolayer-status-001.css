@@ -76,31 +76,27 @@
   height: 28px;
 }
 
-.hvcSCS {
-  display: flex;
-  flex-direction: column;
-  min-height: var(--avatar-height);
-  width: var(--avatar-width);
-}
-.hvcSCS::before {
-  flex-shrink: 1;
-  flex-grow: 1;
-  content: "";
-}
-.hvcSCS img {
-  max-width: 60%;
-  flex-shrink: 0;
-}
-
 /* 画像の下部にステータスを移動 */
 .csWTEe {
   flex-direction: column;
   gap: 24px;
 }
 
-/* 画像の左右に余白を */
+/* 画像のところ */
 .fHePpg {
-  padding: 0px 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: var(--avatar-height);
+  width: var(--avatar-width);
+}
+.fHePpg::before {
+  flex-shrink: 1;
+  flex-grow: 1;
+  content: "";
+}
+.fHePpg img {
+  max-width: 60%;
+  flex-shrink: 0;
 }
 
 /* ステータス集団の左余白消す */
