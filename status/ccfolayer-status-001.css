@@ -9,7 +9,7 @@
     --avatar-border-style: solid;
     --avatar-border-color: rgb(245, 245, 245);
     --avatar-border-radius: 10px;
-  
+
     --badge-height:24px;
     --badge-width: 40px;
     --badge-background: rgba(0, 0, 0, 0.64);
@@ -76,18 +76,31 @@
   height: 28px;
 }
 
-.hvcSCS {
+/* 画像の下部にステータスを移動 */
+.csWTEe {
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 画像のところ */
+.fHePpg {
   display: flex;
   flex-direction: column;
   min-height: var(--avatar-height);
   width: var(--avatar-width);
 }
-.hvcSCS::before {
+.fHePpg::before {
   flex-shrink: 1;
   flex-grow: 1;
   content: "";
 }
-.hvcSCS img {
+.fHePpg img {
   max-width: 60%;
   flex-shrink: 0;
+}
+
+/* ステータス集団の左余白消す */
+.ScykT {
+  margin-left: 0;
+  gap: 20px;
 }
