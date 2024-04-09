@@ -9,7 +9,7 @@
     --avatar-border-style: solid;
     --avatar-border-color: rgb(245, 245, 245);
     --avatar-border-radius: 10px;
-  
+
     --badge-height:24px;
     --badge-width: 40px;
     --badge-background: rgba(0, 0, 0, 0.64);
@@ -90,4 +90,21 @@
 .hvcSCS img {
   max-width: 60%;
   flex-shrink: 0;
+}
+
+/* 画像の下部にステータスを移動 */
+.csWTEe {
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 画像の左右に余白を */
+.fHePpg {
+  padding: 0px 16px;
+}
+
+/* ステータス集団の左余白消す */
+.ScykT {
+  margin-left: 0;
+  gap: 20px;
 }
