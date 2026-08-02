@@ -147,7 +147,7 @@ hr {
   margin-right: var(--icon-margin-right) !important;
 }
 /**　チャット欄アイコン背景 */
-.MuiListItemAvatar-root > div {
+.MuiListItemAvatar-root .MuiAvatar-root {
   width: var(--icon-width) !important;
   height: var(--icon-height) !important;
   background: var(--icon-background-color) !important;
@@ -318,7 +318,7 @@ ccfolayer-chat-001
   margin-right: var(--icon-margin-right) !important;
 }
 /**　チャット欄アイコン背景 */
-.MuiListItemAvatar-root > div {
+.MuiListItemAvatar-root .MuiAvatar-root {
   position: relative;
   width: var(--icon-width) !important;
   height: var(--icon-height) !important;
@@ -328,7 +328,7 @@ ccfolayer-chat-001
 }
 
 /* アイコンが横長のときに画像を下に押しやる */
-.MuiListItemAvatar-root > div::before {
+.MuiListItemAvatar-root .MuiAvatar-root::before {
   content: "";
   flex-shrink: 1;
   flex-grow: 1;  
@@ -400,7 +400,7 @@ ccfolayer-chat-001
 }
 
 /**　チャット欄アイコン背景 */
-.MuiList-root>div>div>div:nth-last-child(-n+1) .MuiListItemAvatar-root > div {
+.MuiList-root>div>div>div:nth-last-child(-n+1) .MuiListItemAvatar-root .MuiAvatar-root {
   width: var(--primary-icon-width) !important;
   height: var(--primary-icon-height) !important;
   background: var(--icon-background-color) !important;
