@@ -147,7 +147,7 @@ hr {
   margin-right: var(--icon-margin-right) !important;
 }
 /**　チャット欄アイコン背景 */
-.MuiListItemAvatar-root .MuiAvatar-root {
+.MuiListItemAvatar-root .MuiAvatar-root:has(> img) {
   width: var(--icon-width) !important;
   height: var(--icon-height) !important;
   background: var(--icon-background-color) !important;
@@ -317,8 +317,20 @@ ccfolayer-chat-001
   margin-left: var(--icon-margin-left) !important;
   margin-right: var(--icon-margin-right) !important;
 }
+/**　DOM変更で挟まった中間wrapper divに明示サイズを与える。
+   これがないとwrapper自身の既定サイズ（小アイコン相当）で
+   .MuiListItemAvatar-root（overflow:hidden）がクリップされ、
+   特にメイン表示（360px）でアイコン画像がほぼ全部見えなくなる。
+   またこのwrapperはココフォリア側で background: rgba(0,0,0,0.2) が
+   付いており、放置するとアイコンサイズぴったりの薄い黒い四角として
+   見えてしまうので、背景も消しておく。 */
+.MuiListItemAvatar-root > div {
+  width: var(--icon-width) !important;
+  height: var(--icon-height) !important;
+  background: var(--icon-background-color) !important;
+}
 /**　チャット欄アイコン背景 */
-.MuiListItemAvatar-root .MuiAvatar-root {
+.MuiListItemAvatar-root .MuiAvatar-root:has(> img) {
   position: relative;
   width: var(--icon-width) !important;
   height: var(--icon-height) !important;
@@ -328,7 +340,7 @@ ccfolayer-chat-001
 }
 
 /* アイコンが横長のときに画像を下に押しやる */
-.MuiListItemAvatar-root .MuiAvatar-root::before {
+.MuiListItemAvatar-root .MuiAvatar-root:has(> img)::before {
   content: "";
   flex-shrink: 1;
   flex-grow: 1;  
@@ -399,17 +411,38 @@ ccfolayer-chat-001
   margin-top: calc(-1 * calc(var(--primary-icon-height) - var(--primary-chat-height)))  !important;
 }
 
+/**　中間wrapper divをメインアイコンサイズに合わせる（上記と同じ理由） */
+.MuiList-root>div>div>div:nth-last-child(-n+1) .MuiListItemAvatar-root > div {
+  width: var(--primary-icon-width) !important;
+  height: var(--primary-icon-height) !important;
+}
+
 /**　チャット欄アイコン背景 */
-.MuiList-root>div>div>div:nth-last-child(-n+1) .MuiListItemAvatar-root .MuiAvatar-root {
+.MuiList-root>div>div>div:nth-last-child(-n+1) .MuiListItemAvatar-root .MuiAvatar-root:has(> img) {
   width: var(--primary-icon-width) !important;
   height: var(--primary-icon-height) !important;
   background: var(--icon-background-color) !important;
   border-radius: var(--primary-icon-radius) !important;
 }
 
-/** チャット欄アイコン画像 */
+/** チャット欄アイコン画像。
+   MUI既定の.MuiAvatar-imgが height:100%; object-fit:cover を持っているため、
+   そのままだと.MuiAvatar-root:has(> img)::beforeによる
+   「横長画像を下に押しやる」flexトリックが効かず、横長画像が
+   360×360いっぱいにクロップされて寄りすぎてしまう。
+   height:autoで幅基準の自然なアスペクト比に戻しつつ、縦長画像が
+   枠を大きくはみ出して足元だけが見える状態にならないよう
+   max-heightで枠内に収め、object-position:topで上（顔）側を残す。
+     ・横長（例 1000x607）→ 360x219 に収まり、::beforeで下寄せ
+     ・縦長（例 535x1920）→ 360x360 にクロップされ、上部＝顔が残る
+   ※通常サイズ（36px）側はoverflow:hiddenの親が無く、はみ出すと
+     隣の行に被るため未変更（MUI既定のcover任せ）。 */
 .MuiList-root>div>div>div:nth-last-child(-n+1) .MuiListItemAvatar-root img {
   width: var(--primary-icon-width) !important;
+  height: auto !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  object-position: top !important;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
