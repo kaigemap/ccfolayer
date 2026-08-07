@@ -1,1 +1,10 @@
 .DS_Store
+
+# 調査メモや記事の下書き。テストルームのURL、報告者のアカウント、
+# 作業経緯など公開リポジトリに置くべきでない内容を含むためローカル限定にする
+docs/bugreports/
+docs/monitoring/
+docs/note-updates/
+
+# ローカルのMCP設定（Chromeのプロファイル指定など環境依存）
+.mcp.json
