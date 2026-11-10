@@ -1,118 +1,168 @@
-@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/status/main.css");
+/**************************************************************
+  ccfolayer-status-001
+  ココフォリアのキャラクターのステータスを、OBS で録画・配信する用に整えるカスタム CSS
+  https://github.com/kaigemap/ccfolayer
 
-/* 変数上書き */
+  ・アバターの下に、HP などのステータスを縦に並べる
+  ・ステータスの名前と数字は、棒の上に縁取りの文字で出す
+  ・OBS のブラウザソースに、キャラクターの表示用 URL
+    （https://ccfolia.com/rooms/<ルーム>/characters/<キャラ>）とこの CSS をまるごと入れて使う
+
+  ココフォリアの更新で壊れにくくするために、ココフォリアが自動で付ける名前
+  （css-xxxx、sc-xxxx など）には頼らず、MUI の部品名（.MuiBadge-root など）と
+  ステータスの棒の印（[variant="bar"]）で狙っている
+**************************************************************/
+
+/* ===== 設定（数字を変えて好みに合わせる） ===== */
 :root {
-    --avatar-height: 80px;
-    --avatar-width: 140px;
-    --avatar-background: rgba(22, 22, 22, 1);
-    --avatar-border-size: 1px;
-    --avatar-border-style: solid;
-    --avatar-border-color: rgb(245, 245, 245);
-    --avatar-border-radius: 10px;
+  /* アバター */
+  --avatar-width: 140px;
+  --avatar-height: 80px;
+  --avatar-background: rgba(22, 22, 22, 1);
+  --avatar-border: 1px solid rgb(245, 245, 245);
+  --avatar-border-radius: 10px;
+  /* 絵の幅。枠の幅に対する割合で、絵は枠の下に寄せて左右の真ん中に置く。
+     枠より縦に長い絵は、上（顔）を残して下を切る。
+     正方形の顔グラなら 57% 以下で顔が全部入り、数字を大きくするほど寄って大きく映る。
+     キャラごとに OBS のソースを分けていれば、ソースごとにこの数字を変えて調整できる */
+  --avatar-image-width: 60%;
 
-    --badge-height:24px;
-    --badge-width: 40px;
-    --badge-background: rgba(0, 0, 0, 0.64);
-    --badge-font-size: 1.5rem;
-    --badge-font-color: rgb(255, 255, 255);
+  /* アバターの右上の数字（イニシアティブ） */
+  --badge-width: 40px;
+  --badge-height: 24px;
+  --badge-background: rgba(0, 0, 0, 0.64);
+  --badge-font-size: 1.5rem;
+  --badge-font-color: rgb(255, 255, 255);
 
-    --status-column: 1;
-    --status-height: 6px;
-    --status-width: 138px;
-    --status-background: var(--background-color, rgb(31, 164, 184));
-    --status-font-size: 1.5rem;
-    --status-font-color: var(--font-color, rgb(255, 255, 255));
-    --status-font-secondary-color: var(--font-color-fail, #F93844);
-    --status-font-border-color: rgb(0, 0, 0);
-    --status-border-width: var(--border-width, 1px);
-    --status-border-style: solid;
-    --status-border-color: var(--border-color, rgb(0, 0, 0));
-    --status-border-image: var(--border-image, url());
-    --status-border-radius: var(--border-radius, 2px);
-    --status-border-shadow: var(--border-shadow, 0);
+  /* ステータスの棒 */
+  --status-width: 138px;
+  --status-height: 6px;
+  --status-background: rgb(31, 164, 184);
+  --status-border: 1px solid rgb(0, 0, 0);
+  --status-border-radius: 2px;
+  --status-row-gap: 30px;               /* ステータス同士の間 */
+
+  /* ステータスの文字 */
+  --status-font-size: 1.5rem;
+  --status-font-color: rgb(255, 255, 255);
+  --status-font-secondary-color: #F93844; /* 最大値より減った数字の色 */
+  --status-font-border-color: rgb(0, 0, 0);
 }
 
-.bOcrjs {
-    padding: 0px;
-    bottom: 0px;
-    position: absolute;
+/* ===== OBS で背景を透かす ===== */
+body {
+  background-color: rgba(0, 0, 0, 0);
+  margin: 0px auto;
+  overflow: hidden;
+}
+#root {
+  padding-top: 20px;
 }
 
-.MuiBadge-badge {
-    border-radius: 0px 10px 0px 10px;
-    top: 14px !important;
-    right: 21px !important;
-    position: absolute !important;
+/* 監視モードの注意書き */
+.MuiSnackbar-root {
+  display: none;
 }
 
-.APSsb {
-  flex-direction: column;
-  position: relative;
-  width: var(--avater-container-width);
-  justify-content: flex-end;
-}
-
-.jfazhi {
-  margin-left: 0px;
-  display: grid;
-  gap: 24px;
-  padding-top: 28px
-}
-
-.kzKPwU {
-  margin: 1px ;
-}
-
-.MuiTypography-body2 {
-  padding: 0px 2px;
-  margin-top: -54px
-}
-
-[variant="bar"]>div {
-  overflow: visible;
-}
-
-[variant="bar"]>div>div {
-  height: 28px;
-}
-
-/* ステータス行の間隔を確保する。
-   ココフォリア側の更新で1行あたりの高さが縮み、行間が12pxしか
-   なくなった。上の margin-top:-54px で棒の上に持ち上げている
-   テキスト（約30px）がその隙間に収まらず、行同士が重なるので、
-   行間だけを広げる。棒の太さ・色・テキストと棒の位置関係は変えない。 */
-[variant="bar"] {
-  row-gap: 30px;
-}
-
-/* 画像の下部にステータスを移動 */
-/* 旧 .csWTEe。ココフォリア側の更新でこのハッシュクラスが消えたため、
-   アバター（.MuiBadge-root）を直接の子に持つ div という構造で指定し直す。
-   これが効かないとアバターとステータスが横並びになる。 */
+/* ===== アバターとステータスを縦に並べる ===== */
+/* アバター（.MuiBadge-root）を直接の子に持つ箱が、アバターとステータスの並び */
 div:has(> .MuiBadge-root) {
   flex-direction: column;
   gap: 24px;
 }
 
-/* 画像のところ */
-.fHePpg {
-  display: flex;
-  flex-direction: column;
-  min-height: var(--avatar-height);
+/* ===== アバター ===== */
+.MuiBadge-root {
+  display: block;
+  margin-right: 0;
+}
+/* アバターは外側と内側の2重になっているので、両方に同じ枠を付ける */
+.MuiBadge-root .MuiAvatar-root {
   width: var(--avatar-width);
+  height: var(--avatar-height);
+  background: var(--avatar-background);
+  border: var(--avatar-border);
+  border-radius: var(--avatar-border-radius);
+  align-items: start;
 }
-.fHePpg::before {
-  flex-shrink: 1;
-  flex-grow: 1;
+/* 絵。--avatar-image-width の幅にして、枠の下に寄せる */
+.MuiBadge-root .MuiAvatar-root:has(> img) {
+  flex-direction: column;
+  align-items: center;
+}
+.MuiBadge-root .MuiAvatar-root:has(> img)::before {
   content: "";
+  flex: 1 1 auto;
 }
-.fHePpg img {
-  max-width: 60%;
+.MuiBadge-root .MuiAvatar-root > img {
+  width: var(--avatar-image-width);
+  height: auto;
   flex-shrink: 0;
 }
+/* 右上の数字 */
+.MuiBadge-root .MuiBadge-badge {
+  position: absolute !important;
+  top: 14px !important;
+  right: 21px !important;
+  width: var(--badge-width);
+  height: var(--badge-height);
+  border-radius: 0px 10px 0px 10px;
+  font-size: var(--badge-font-size);
+  color: var(--badge-font-color) !important;
+  background: var(--badge-background) !important;
+}
 
-/* ステータス集団の左余白消す */
-.ScykT {
-  margin-left: 0;
-  gap: 20px;
+/* ===== ステータス ===== */
+/* [variant="bar"] がステータスの並び。中は
+   ステータスごとの箱 > （名前と数字の行、棒）。棒の中は（下地、中身） */
+[variant="bar"] {
+  max-width: calc(var(--status-width) + 10px);
+  row-gap: var(--status-row-gap);
+}
+/* ステータスごとの箱。これが棒の枠になる */
+[variant="bar"] > div {
+  width: var(--status-width);
+  height: var(--status-height);
+  border: var(--status-border);
+  border-radius: var(--status-border-radius);
+  overflow: visible;
+}
+/* 名前と数字の行、棒 */
+[variant="bar"] > div > div {
+  width: var(--status-width);
+  height: 28px;
+}
+/* 棒の下地と中身 */
+[variant="bar"] > div > div:nth-child(2) > div {
+  height: var(--status-height);
+  background: var(--status-background);
+}
+
+/* 名前と数字。棒の上に持ち上げ、縁取りを付ける */
+[variant="bar"] .MuiTypography-body2 {
+  display: flex;
+  align-items: center;
+  flex-shrink: 1;
+  margin-top: -54px;
+  padding: 0px 2px;
+  font-size: var(--status-font-size);
+  color: var(--status-font-color);
+  text-shadow:
+    var(--status-font-border-color) 1px 1px 0px,
+    var(--status-font-border-color) -1px -1px 0px,
+    var(--status-font-border-color) -1px 1px 0px,
+    var(--status-font-border-color) 1px -1px 0px,
+    var(--status-font-border-color) 0px 1px 0px,
+    var(--status-font-border-color) 0px -1px 0px,
+    var(--status-font-border-color) -1px 0px 0px,
+    var(--status-font-border-color) 1px 0px 0px;
+}
+/* 数字（「8/8」の「8」）を右に寄せる */
+[variant="bar"] .MuiTypography-body2 + .MuiTypography-body2 > span {
+  margin-left: auto;
+  font-size: var(--status-font-size);
+}
+/* 最大値より減った数字 */
+[variant="bar"] [color="secondary"] {
+  color: var(--status-font-secondary-color);
 }
